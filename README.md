@@ -1,6 +1,6 @@
 Requires "BOT_TOKEN" environment variable
 
-```typescript
+```ts
 import { App, AppContext } from "https://deno.land/x/grammy_app/mod.ts";
 import { Composer } from "https://deno.land/x/grammy/mod.ts";
 
