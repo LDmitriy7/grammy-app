@@ -1,6 +1,5 @@
-```ts
-import { App, AppContext } from "https://deno.land/x/grammy_app/mod.ts"
-import { Composer } from "https://deno.land/x/grammy/mod.ts"
+import { App, AppContext } from "../mod.ts"
+import { Composer } from "../src/deps.ts"
 
 interface Session {
   count: number
@@ -17,4 +16,3 @@ handlers.on("msg", (ctx) => {
 })
 
 app.run(handlers)
-```

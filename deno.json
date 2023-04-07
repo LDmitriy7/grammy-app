@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "test": "deno run --watch -A tests/test.ts"
+  },
+  "fmt": {
+    "options": { "semiColons": false }
+  }
+}
