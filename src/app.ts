@@ -22,8 +22,8 @@ class App<S> {
     bot.catch(console.error)
   }
 
-  run(handlers: Composer<AppContext<S>>) {
-    this.bot.use(handlers)
+  run(handler: Composer<AppContext<S>>) {
+    this.bot.use(handler)
     runBot(this.bot)
   }
 }

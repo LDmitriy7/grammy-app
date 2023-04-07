@@ -8,11 +8,11 @@ interface Session {
 type Context = AppContext<Session>
 const defaultSession: Session = { count: 0 }
 const app = new App(defaultSession)
-const handlers = new Composer<Context>()
+const handler = new Composer<Context>()
 
-handlers.on("msg", (ctx) => {
+handler.on("msg", (ctx) => {
   const count = ++ctx.session.count
   return ctx.r(`${count}`)
 })
 
-app.run(handlers)
+app.run(handler)
