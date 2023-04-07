@@ -2,8 +2,8 @@ import {
   apiThrottler,
   autoRetry,
   Bot,
-  Composer,
   env,
+  Handler,
   run as runBot,
 } from "./deps.ts"
 import { sequentialize, setR, setSession } from "./middlewares.ts"
@@ -22,7 +22,7 @@ class App<S> {
     bot.catch(console.error)
   }
 
-  run(handler: Composer<AppContext<S>>) {
+  run(handler: Handler<AppContext<S>>) {
     this.bot.use(handler)
     runBot(this.bot)
   }

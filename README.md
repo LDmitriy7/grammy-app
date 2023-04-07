@@ -1,8 +1,7 @@
 Requires "BOT_TOKEN" environment variable
 
 ```ts
-import { App, AppContext } from "https://deno.land/x/grammy_app/mod.ts"
-import { Composer } from "https://deno.land/x/grammy/mod.ts"
+import { App, AppContext, Handler } from "https://deno.land/x/grammy_app/mod.ts"
 
 interface Session {
   count: number
@@ -11,9 +10,9 @@ interface Session {
 type Context = AppContext<Session>
 const defaultSession: Session = { count: 0 }
 const app = new App(defaultSession)
-const handler = new Composer<Context>()
+const handler = new Handler<Context>()
 
-handler.on("msg", (ctx) => {
+handler.privateChat.start((ctx) => {
   const count = ++ctx.session.count
   return ctx.r(`${count}`)
 })

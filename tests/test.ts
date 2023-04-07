@@ -1,5 +1,4 @@
-import { App, AppContext } from "../mod.ts"
-import { Composer } from "../src/deps.ts"
+import { App, AppContext, Handler } from "../mod.ts"
 
 interface Session {
   count: number
@@ -8,9 +7,9 @@ interface Session {
 type Context = AppContext<Session>
 const defaultSession: Session = { count: 0 }
 const app = new App(defaultSession)
-const handler = new Composer<Context>()
+const handler = new Handler<Context>()
 
-handler.on("msg", (ctx) => {
+handler.privateChat.start((ctx) => {
   const count = ++ctx.session.count
   return ctx.r(`${count}`)
 })
