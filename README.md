@@ -3,18 +3,18 @@ Requires "BOT_TOKEN" environment variable
 ```ts
 import { App, AppContext, Handler } from "https://deno.land/x/grammy_app/mod.ts"
 
-interface Session {
-  count: number
-}
+const session = { count: 0 }
+const texts = { greet: "Hello!", count: "Count:" }
+type Command = "count" | "test"
 
-type Context = AppContext<Session>
-const defaultSession: Session = { count: 0 }
-const app = new App(defaultSession)
-const handler = new Handler<Context>()
+type Context = AppContext<typeof session, typeof texts>
+const app = new App(session, texts)
+const handler = new Handler<Context, Command>()
 
-handler.privateChat.start((ctx) => {
-  const count = ++ctx.session.count
-  return ctx.r(`${count}`)
+handler.privateChat.start((ctx) => ctx.r("greet"))
+handler.cmd("count", (ctx) => {
+  const text = `${ctx.texts.count} ${++ctx.session.count}`
+  return ctx.rt(text)
 })
 
 app.run(handler)

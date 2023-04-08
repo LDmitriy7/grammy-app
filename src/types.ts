@@ -10,11 +10,23 @@ import {
 
 type KeyboardMarkup = ReplyKeyboardMarkup | InlineKeyboardMarkup
 type ReplyMarkup = KeyboardMarkup | ReplyKeyboardRemove | ForceReply
+type Texts = Record<string, string>
+// deno-lint-ignore no-explicit-any
+type Session = Record<string, any>
 
-interface RFlavor {
-  r: (text: string, markup?: ReplyMarkup) => Promise<Message.TextMessage>
+interface RFlavor<T> {
+  rt: (text: string, markup?: ReplyMarkup) => Promise<Message.TextMessage>
+  r: (textKey: keyof T, markup?: ReplyMarkup) => Promise<Message.TextMessage>
 }
 
-type AppContext<S> = Context & SessionFlavor<S> & RFlavor
+interface TextsFlavours<T> {
+  texts: T
+}
 
-export type { AppContext, ReplyMarkup }
+type AppContext<S extends Session, T extends Texts> =
+  & Context
+  & SessionFlavor<S>
+  & RFlavor<T>
+  & TextsFlavours<T>
+
+export type { AppContext, ReplyMarkup, Session, Texts }
