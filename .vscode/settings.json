@@ -1,4 +1,6 @@
 {
   "deno.enable": true,
-  "deno.unstable": false
+  "cSpell.words": [
+    "sqnt"
+  ]
 }
