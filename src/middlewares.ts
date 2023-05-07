@@ -1,11 +1,11 @@
-import { Context, sequentialize as _sqnt, session } from "./deps.ts"
+import { Context, sequentialize as _seq, session } from "./deps.ts"
 import { Session } from "./types.ts"
 
 function getSessionKey(ctx: Context) {
-  return ctx.chat?.id.toString()
+  return ctx.chat && ctx.from ? `${ctx.chat.id}/${ctx.from.id}` : undefined
 }
 
-const sequentialize = _sqnt(getSessionKey)
+const sequentialize = _seq(getSessionKey)
 
 const setSession = <S extends Session>(defaultSession: S) =>
   session({

@@ -1,9 +1,9 @@
 {
   "tasks": {
-    "test": "deno run --watch -A tests/test.ts",
+    "dev": "deno run --watch -A tests/test.ts",
     "lint": "deno fmt && deno lint && deno check tests/test.ts"
   },
   "fmt": {
-    "options": { "semiColons": false }
+    "semiColons": false
   }
 }

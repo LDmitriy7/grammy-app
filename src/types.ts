@@ -1,11 +1,6 @@
-import { Context, RFlavor, SessionFlavor, Texts } from "./deps.ts"
+import { Context, RFlavor, SessionFlavor, Update } from "./deps.ts"
 
 // deno-lint-ignore no-explicit-any
-type Session = Record<string, any>
-
-type AppContext<S extends Session, T extends Texts> =
-  & Context
-  & SessionFlavor<S>
-  & RFlavor<T>
-
-export type { AppContext, Session, Texts }
+export type Session = Record<string, any>
+export type AppContext<S extends Session> = Context & SessionFlavor<S> & RFlavor
+export type AllowedUpdates = Exclude<keyof Update, "update_id">[]

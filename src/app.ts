@@ -4,36 +4,40 @@ import {
   Bot,
   env,
   Handler,
-  run as runBot,
+  runBot,
   setR,
 } from "./deps.ts"
 import { sequentialize, setSession } from "./middlewares.ts"
-import { AppContext, Session, Texts } from "./types.ts"
+import { AllowedUpdates, AppContext, Session } from "./types.ts"
 
-const BOT_TOKEN = env.str("BOT_TOKEN")
+export class App<S extends Session, Command extends string = string>
+  extends Bot<AppContext<S>> {
+  handlers: Handler<AppContext<S>, Command>
 
-class App<
-  S extends Session,
-  T extends Texts,
-  C extends AppContext<S, T>,
-> {
-  bot: Bot<C>
-
-  constructor(defaultSession: S, texts: T) {
-    const bot = this.bot = new Bot(BOT_TOKEN)
-    bot.api.config.use(apiThrottler(), autoRetry())
-    bot.use(
+  constructor(defaultSession: S, token?: string) {
+    token = token ?? env.str("TOKEN")
+    super(token)
+    // @ts-ignore: TODO
+    this.api.config.use(apiThrottler(), autoRetry())
+    this.use(
       sequentialize,
       setSession(defaultSession),
-      setR(texts),
+      setR,
     )
-    bot.catch(console.error)
+    this.catch(console.error)
+    this.handlers = new Handler()
+    this.use(this.handlers)
   }
 
-  run(handler: Handler<C>) {
-    this.bot.use(handler)
-    runBot(this.bot)
+  run(allowed_updates = allowedUpdates) {
+    this.api.deleteWebhook()
+    runBot(this, { runner: { fetch: { allowed_updates } } })
   }
 }
 
-export { App }
+const allowedUpdates: AllowedUpdates = [
+  "message",
+  "callback_query",
+  "chat_member",
+  "my_chat_member",
+]

@@ -1,17 +1,16 @@
-import { App, AppContext, Handler } from "../mod.ts"
+import { App, Msg } from "../mod.ts"
 
-const session = { count: 0 }
-const texts = { greet: "Hello!", count: "Count:" }
+type Session = { count: number }
 type Command = "count" | "test"
 
-type Context = AppContext<typeof session, typeof texts>
-const app = new App(session, texts)
-const handler = new Handler<Context, Command>()
+const app = new App<Session, Command>({ count: 0 })
+const handlers = app.handlers
+const helloMsg = new Msg("Hello")
 
-handler.privateChat.start((ctx) => ctx.r("greet"))
-handler.cmd("count", (ctx) => {
-  const text = `${ctx.texts.count} ${++ctx.session.count}`
-  return ctx.rt(text)
-})
+function CountMsg(count: number) {
+  return new Msg(`Count is: ${count}`)
+}
 
-app.run(handler)
+handlers.private.start((ctx) => ctx.r(helloMsg))
+handlers.command("count", (ctx) => ctx.r(CountMsg(++ctx.session.count)))
+app.run()
