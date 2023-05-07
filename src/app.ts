@@ -4,6 +4,8 @@ import {
   Bot,
   env,
   Handler,
+  hydrateReply,
+  parseMode,
   runBot,
   setR,
 } from "./deps.ts"
@@ -17,17 +19,33 @@ export class App<S extends Session, Command extends string = string>
   constructor(defaultSession: S, token?: string) {
     token = token ?? env.str("TOKEN")
     super(token)
-    // @ts-ignore: TODO
-    this.api.config.use(apiThrottler(), autoRetry())
+    this.api.config.use(
+      // @ts-ignore: TODO
+      apiThrottler(),
+      autoRetry(),
+      parseMode("HTML"),
+    )
     this.use(
       sequentialize,
       setSession(defaultSession),
       setR,
+      hydrateReply,
     )
     this.catch(console.error)
     this.handlers = new Handler()
     this.use(this.handlers)
   }
+
+  get url() {
+    return `https://t.me/${this.botInfo.username}`
+  }
+
+  startUrl(payload: string, group = false) {
+    const q = group ? "startgroup" : "start"
+    return `${this.url}?${q}=${payload}`
+  }
+
+  startGroupUrl = (payload = "0") => this.startUrl(payload, true)
 
   run(allowed_updates = allowedUpdates) {
     this.api.deleteWebhook()

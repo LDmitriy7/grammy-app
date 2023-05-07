@@ -7,6 +7,11 @@ export {
 export type { Update } from "https://deno.land/x/grammy@v1.16.0/types.ts"
 export { Handler } from "https://deno.land/x/grammy_handler@v0.1/mod.ts"
 export {
+  hydrateReply,
+  parseMode,
+  type ParseModeFlavor,
+} from "https://deno.land/x/grammy_parse_mode@1.7.1/mod.ts"
+export {
   Msg,
   type RFlavor,
   setR,
