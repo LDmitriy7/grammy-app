@@ -1,21 +1,24 @@
-Requires "BOT_TOKEN" environment variable
+Requires "TOKEN" environment variable
 
 ```ts
-import { App, AppContext, Handler } from "https://deno.land/x/grammy_app/mod.ts"
+import { App, Msg } from "../mod.ts"
 
-const session = { count: 0 }
-const texts = { greet: "Hello!", count: "Count:" }
+type Session = { count: number }
 type Command = "count" | "test"
 
-type Context = AppContext<typeof session, typeof texts>
-const app = new App(session, texts)
-const handler = new Handler<Context, Command>()
+const app = new App<Session, Command>({ count: 0 })
+const handlers = app.handlers
+const helloMsg = new Msg("Hello")
 
-handler.privateChat.start((ctx) => ctx.r("greet"))
-handler.cmd("count", (ctx) => {
-  const text = `${ctx.texts.count} ${++ctx.session.count}`
-  return ctx.rt(text)
+function CountMsg(count: number) {
+  return new Msg(`<b>Count is:</b> ${count}`)
+}
+
+handlers.private.start((ctx) => ctx.r(helloMsg))
+handlers.command("count", (ctx) => ctx.r(CountMsg(++ctx.session.count)))
+handlers.command("test", (ctx) => {
+  const s = [app.url, app.startUrl("1"), app.startGroupUrl()]
+  ctx.reply(s.join("\n"))
 })
-
-app.run(handler)
+app.run()
 ```

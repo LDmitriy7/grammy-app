@@ -20,7 +20,6 @@ export class App<S extends Session, Command extends string = string>
     token = token ?? env.str("TOKEN")
     super(token)
     this.api.config.use(
-      // @ts-ignore: TODO
       apiThrottler(),
       autoRetry(),
       parseMode("HTML"),
