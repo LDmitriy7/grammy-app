@@ -1,7 +1,7 @@
 Requires "TOKEN" environment variable
 
 ```ts
-import { App, Msg } from "../mod.ts"
+import { App, Msg } from "https://deno.land/x/grammy_app/mod.ts"
 
 type Session = { count: number }
 type Command = "count" | "test"
