@@ -3,7 +3,7 @@ export {
   Context,
   session,
   type SessionFlavor,
-} from "https://deno.land/x/grammy@v1.16.0/mod.ts"
+} from "https://lib.deno.dev/x/grammy@1.x/mod.ts" 
 export type { Update } from "https://deno.land/x/grammy@v1.16.0/types.ts"
 export { Handler } from "https://deno.land/x/grammy_handler@v0.1/mod.ts"
 export {

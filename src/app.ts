@@ -12,9 +12,12 @@ import {
 import { sequentialize, setSession } from "./middlewares.ts"
 import { AllowedUpdates, AppContext, Session } from "./types.ts"
 
-export class App<S extends Session, Command extends string = string>
-  extends Bot<AppContext<S>> {
-  handlers: Handler<AppContext<S>, Command>
+export class App<
+  S extends Session,
+  Command extends string = string,
+  CTX extends AppContext<S> = AppContext<S>,
+> extends Bot<CTX> {
+  handlers: Handler<CTX, Command>
 
   constructor(defaultSession: S, token?: string) {
     token = token ?? env.str("TOKEN")
