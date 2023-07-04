@@ -3,8 +3,8 @@ export {
   Context,
   session,
   type SessionFlavor,
-} from "https://deno.land/x/grammy@v1.16.0/mod.ts"
-export type { Update } from "https://deno.land/x/grammy@v1.16.0/types.ts"
+} from "https://deno.land/x/grammy@v1.17.1/mod.ts"
+export type { Update } from "https://deno.land/x/grammy@v1.17.1/types.ts"
 export { Handler } from "https://deno.land/x/grammy_handler@v0.1/mod.ts"
 export {
   hydrateReply,
