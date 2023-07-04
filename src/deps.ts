@@ -3,9 +3,9 @@ export {
   Context,
   session,
   type SessionFlavor,
-} from "https://deno.land/x/grammy@v1.17.1/mod.ts"
-export type { Update } from "https://deno.land/x/grammy@v1.17.1/types.ts"
-export { Handler } from "https://deno.land/x/grammy_handler@v0.1/mod.ts"
+} from "https://deno.land/x/grammy/mod.ts"
+export type { Update } from "https://deno.land/x/grammy/types.ts"
+export { Handler } from "https://deno.land/x/grammy_handler/mod.ts"
 export {
   hydrateReply,
   parseMode,
@@ -15,7 +15,7 @@ export {
   Msg,
   type RFlavor,
   setR,
-} from "https://deno.land/x/grammy_r@v0.1/mod.ts"
+} from "https://deno.land/x/grammy_r/mod.ts"
 export {
   run as runBot,
   sequentialize,
